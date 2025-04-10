@@ -19,8 +19,12 @@ class ViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
+            //This line crashes the app with an exception
+            fatalError("Unable to dequeue Person cell")
+        }
         return cell
+        
     }
 }
 
