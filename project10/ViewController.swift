@@ -28,6 +28,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     //All apps that are installed have a directory called Documents where you can save private information for the app, and it's also automatically synchronized with iCloud
     
+    var people = [Person]();
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
@@ -48,6 +49,10 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         if let jpegData = image.jpegData(compressionQuality: 0.8){
             try? jpegData.write(to: imagePath);
         }
+        
+        let person = Person(name: "Unknwon", image: imageName)
+        people.append(person);
+        collectionView.reloadData();
         dismiss(animated: true) //dismiss the topmost view controller i.e. Image picker for this case.
     }
     
