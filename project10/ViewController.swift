@@ -81,6 +81,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         
         //reusable Identifier as imageView
         cell.imageView.image = UIImage(contentsOfFile: path.path)
+        
+        //adding some styles
+        cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.cornerRadius = 3
+        cell.layer.cornerRadius = 7
         return cell
         
     }
