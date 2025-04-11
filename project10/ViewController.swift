@@ -8,7 +8,24 @@
 import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    //UIImagePickerControllerDelegate tells us, user either selected a picture or cancelled the picker.
+    //It has two methods and both are optional.
+    //We care about is imagePickerController(_, didFinishPickingMediaWithInfo:),
+    //which returns when the user selected an image and it's being returned to you.
+    
+    //This method needs to do several things:
+    
+    // - Extract the image from the dictionary that is passed as a parameter.
+    // - Generate a unique filename for it.
+    // - Convert it to a JPEG, then write that JPEG to disk.
+    // - Dismiss the view controller.
+    
+    //dictionary parameter will contain one of two keys:
+    // .editedImage (the image that was edited) or .originalImage.
+    
+    //here dictionary will always have .editedImage (the edited version), because we have set allowsEditing = true.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
