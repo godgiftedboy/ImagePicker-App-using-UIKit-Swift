@@ -26,6 +26,8 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     //here dictionary will always have .editedImage (the edited version), because we have set allowsEditing = true.
     
+    //All apps that are installed have a directory called Documents where you can save private information for the app, and it's also automatically synchronized with iCloud
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
@@ -36,6 +38,22 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else{return};
+        let imageName = UUID().uuidString;
+        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName);
+        
+        if let jpegData = image.jpegData(compressionQuality: 0.8){
+            try? jpegData.write(to: imagePath);
+        }
+        dismiss(animated: true) //dismiss the topmost view controller i.e. Image picker for this case.
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
