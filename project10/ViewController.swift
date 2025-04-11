@@ -62,7 +62,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        return people.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -70,6 +70,17 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             //This line crashes the app with an exception
             fatalError("Unable to dequeue Person cell")
         }
+        
+        let person = people[indexPath.item]
+        //item in collection as it is grid (collectionView)
+        //It was row in tableView.
+
+        cell.name.text = person.name //UILabel has reusable Identifier as name in our custom PersonCell class.
+
+        let path = getDocumentsDirectory().appendingPathComponent(person.image)
+        
+        //reusable Identifier as imageView
+        cell.imageView.image = UIImage(contentsOfFile: path.path)
         return cell
         
     }
